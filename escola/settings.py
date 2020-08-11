@@ -126,6 +126,6 @@ REST_FRAMEWORK = {
     ),
     # Autorização - o que ele pode fazer
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     )
 }
