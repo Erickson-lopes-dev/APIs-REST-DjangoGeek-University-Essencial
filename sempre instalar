@@ -1,0 +1,5 @@
+djangorestframework
+markwon
+django-filter
+
+# gerar a documentação da API e ajudar no sistema de filtragem

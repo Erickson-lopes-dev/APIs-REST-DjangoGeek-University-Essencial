@@ -7,6 +7,7 @@ class CursoAdmin(admin.ModelAdmin):
     list_display = ('titulo', 'url', 'atualizacao', 'ativo')
 
 
+# registrando aplicação no django admin
 @admin.register(Avalicacao)
 class AvaliacaoAdmin(admin.ModelAdmin):
     list_display = ('curso', 'nome', 'email', 'avaliacao', 'criacao', 'atualizacao', 'ativo')
