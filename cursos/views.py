@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, mixins
 from rest_framework.generics import get_object_or_404
 from .models import Curso, Avalicacao
 from .serializers import CursoSerializers, AvaliacaoSerializer
@@ -75,6 +75,18 @@ class CursoViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class AvaliacaoViewSet(viewsets.ModelViewSet):
+# class AvaliacaoViewSet(viewsets.ModelViewSet):
+#     queryset = Curso.objects.all()
+#     serializer_class = AvaliacaoSerializer
+
+# Pode colocar o tipo de opção que o usuario pode fazer como get, put ....
+class AvaliacaoViewSet(mixins.CreateModelMixin,
+                       # mixins.ListModelMixin,
+                       mixins.RetrieveModelMixin,
+                       mixins.UpdateModelMixin,
+                       mixins.DestroyModelMixin,
+                       viewsets.GenericViewSet,
+
+                       ):
     queryset = Curso.objects.all()
     serializer_class = AvaliacaoSerializer
