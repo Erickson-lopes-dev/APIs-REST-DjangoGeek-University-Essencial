@@ -22,16 +22,16 @@ class CursoSerializers(serializers.ModelSerializer):
 
     # --- para muitos itens
     # relacionando com os cursos no json colocando um link
-    # avaliacoes = serializers.HyperlinkedRelatedField(
-    #     # de muitos para muitos
-    #     many=True,
-    #     # somente leitura
-    #     read_only=True,
-    #     # nome da rota - ver os detalhes
-    #     view_name='curso-detail')
+    avaliacoes = serializers.HyperlinkedRelatedField(
+        # de muitos para muitos
+        many=True,
+        # somente leitura
+        read_only=True,
+        # nome da rota - ver os detalhes
+        view_name='curso-detail')
 
     # para exibir o id
-    avaliacoes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    # avaliacoes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Curso

@@ -66,11 +66,29 @@ class CursoViewSet(viewsets.ModelViewSet):
     # Criar uma  nova rota quando método for get
     @action(detail=True, methods=['get'])
     def avaliacoes(self, request, pk=None):
+
+        # tamanho da página get recebida - avaliacoes em curso
+        self.pagination_class.page_size = 2
+
+        # buscando todas as avaliações do curso
+        avaliacoes = Avalicacao.objects.filter(curso_id=pk)
+
+        # dentro da query da paginação
+        page = self.paginate_queryset(avaliacoes)
+
+        # se tiver elemento na pagina
+        if page is not None:
+            # coloca na pagina as avaliacoes do curso e transforma em json para enviar
+            serializer = AvaliacaoSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
         # Pega o curso atual
         curso = self.get_object()
+
         # busca todas as avaliações que o curso possui - related_name/ many para muitos
         # dentro do AvaliacaoSerializer vai pegar o curso e dentro de curso vai buscar todos
         serializer = AvaliacaoSerializer(curso.avaliacoes.all(), many=True)
+
         # Retorna os itens coletados
         return Response(serializer.data)
 

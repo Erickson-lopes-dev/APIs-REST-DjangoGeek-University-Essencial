@@ -19,6 +19,10 @@ class Curso(Base):
     class Meta:
         verbose_name = 'Curso'
         verbose_name_plural = 'Cursos'
+        # qual campo sera ordenado
+        ordering = ['id']
+        # # decrescente
+        # ordering = ['-id']
 
     def __str__(self):
         return self.titulo
@@ -36,6 +40,8 @@ class Avalicacao(Base):
         verbose_name_plural = 'Avaliações'
         # pessoa com mesmo email não pode avaliar mais de uma vez o curso (email => curso)
         unique_together = ['email', 'curso']
+        # qual campo sera ordenado
+        ordering = ['id']
 
     def __str__(self):
         return f'{self.nome} avaliou o curso {self.curso}, com nota {self.avaliacao}'
