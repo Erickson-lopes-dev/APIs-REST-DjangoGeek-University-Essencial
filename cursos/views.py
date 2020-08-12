@@ -75,6 +75,7 @@ class CursoViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+# com todas as funções CRUD
 # class AvaliacaoViewSet(viewsets.ModelViewSet):
 #     queryset = Curso.objects.all()
 #     serializer_class = AvaliacaoSerializer
@@ -88,5 +89,5 @@ class AvaliacaoViewSet(mixins.CreateModelMixin,
                        viewsets.GenericViewSet,
 
                        ):
-    queryset = Curso.objects.all()
+    queryset = Avalicacao.objects.all()
     serializer_class = AvaliacaoSerializer
