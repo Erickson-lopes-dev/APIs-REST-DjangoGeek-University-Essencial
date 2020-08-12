@@ -1,8 +1,16 @@
 from rest_framework import generics
 from rest_framework.generics import get_object_or_404
-
 from .models import Curso, Avalicacao
 from .serializers import CursoSerializers, AvaliacaoSerializer
+
+# v2
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+"""
+API versão 1
+"""
 
 
 class CursosAPIView(generics.ListCreateAPIView):
@@ -44,3 +52,29 @@ class AvaliacaoAPIView(generics.RetrieveUpdateDestroyAPIView):
         # caso contrario só procura um pk especificado
         return get_object_or_404(self.get_queryset(), pk=self.kwargs.get('avaliacao_pk'))
 
+
+"""
+API versão 2
+"""
+
+
+class CursoViewSet(viewsets.ModelViewSet):
+    queryset = Curso.objects.all()
+    serializer_class = CursoSerializers
+
+    # /avaliacoes/
+    # Criar uma  nova rota quando método for get
+    @action(detail=True, methods=['get'])
+    def avaliacoes(self, request, pk=None):
+        # Pega o curso atual
+        curso = self.get_object()
+        # busca todas as avaliações que o curso possui - related_name/ many para muitos
+        # dentro do AvaliacaoSerializer vai pegar o curso e dentro de curso vai buscar todos
+        serializer = AvaliacaoSerializer(curso.avaliacoes.all(), many=True)
+        # Retorna os itens coletados
+        return Response(serializer.data)
+
+
+class AvaliacaoViewSet(viewsets.ModelViewSet):
+    queryset = Curso.objects.all()
+    serializer_class = AvaliacaoSerializer
