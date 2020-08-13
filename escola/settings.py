@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
 
+    'rest_framework.authtoken',
+
     'cursos',
 ]
 
@@ -122,11 +124,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 REST_FRAMEWORK = {
     # Autenticação
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
+        # via browser
+        # 'rest_framework.authentication.SessionAuthentication',
+        # via qualquer aplicação
+        'rest_framework.authentication.TokenAuthentication',
     ),
     # Autorização - o que ele pode fazer
     'DEFAULT_PERMISSION_CLASSES': (
+        # Somente autenticado  ou leitura
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        # Somente autenticado
+        # 'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 2

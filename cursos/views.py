@@ -8,6 +8,9 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+# permissoes
+from rest_framework import permissions
+from .permissions import EhSuperUser
 """
 API versão 1
 """
@@ -59,6 +62,12 @@ API versão 2
 
 
 class CursoViewSet(viewsets.ModelViewSet):
+    # adicionando permissões, configuração pontual, Somente a permissão de django model spó com authenticados
+    # pode adicionar e ler, gadastrando usuarios em grupos do django admin
+    permission_classes = (
+        EhSuperUser,  # verifica esse, importa a seguencia que esta colocando
+        permissions.DjangoModelPermissions,
+    )
     queryset = Curso.objects.all()
     serializer_class = CursoSerializers
 
@@ -100,7 +109,7 @@ class CursoViewSet(viewsets.ModelViewSet):
 
 # Pode colocar o tipo de opção que o usuario pode fazer como get, put ....
 class AvaliacaoViewSet(mixins.CreateModelMixin,
-                       # mixins.ListModelMixin,
+                       mixins.ListModelMixin,
                        mixins.RetrieveModelMixin,
                        mixins.UpdateModelMixin,
                        mixins.DestroyModelMixin,
